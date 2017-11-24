@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/thoaivo/Project/AppSoSanh/android/app/build/intermediates/res/merged/debug/mipmap-mdpi/ic_launcher.png",
+        "source": "/home/thoaivo/Project/AppSoSanh/android/app/src/main/res/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/thoaivo/Project/Chapter08/android/app/build/intermediates/res/merged/debug/mipmap-mdpi/ic_launcher.png",
+        "source": "/home/thoaivo/Project/Chapter08/android/app/src/main/res/mipmap-mdpi/ic_launcher.png"
+    }
+]
