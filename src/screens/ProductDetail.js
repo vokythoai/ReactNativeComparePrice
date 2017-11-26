@@ -1,10 +1,10 @@
 import React from 'react';
-import { Image, ScrollView } from 'react-native';
+import { Image, ScrollView, View, TouchableOpacity } from 'react-native';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Icon, Button, Text } from 'native-base';
+import { Icon, Button, Text, List, Spinner, ListItem, Thumbnail, Body } from 'native-base';
 import * as ProductsActions from '../reducers/products';
 
 class ProductDetail extends React.Component {
@@ -12,6 +12,10 @@ class ProductDetail extends React.Component {
     drawerLabel: 'Home',
     tabBarIcon: () => <Icon name="home" />,
   };
+
+  componentWillMount() {
+    this.props.fetchSimilarProducts();
+  }
 
   onBuyPress(product) {
     this.props.addProductToCart(product);
@@ -25,54 +29,56 @@ class ProductDetail extends React.Component {
     const { params } = state;
     const { product } = params;
     return (
-      <ScrollView>
-        <Image
-          style={{
-            height: 200,
-            width: 160,
-            alignSelf: 'center',
-            marginTop: 20,
-          }}
-          source={{ uri: product.img }}
-        />
-        <Text
-          style={{
-            alignSelf: 'center',
-            marginTop: 20,
-            fontSize: 30,
-            fontWeight: 'bold',
-          }}
-        >
-          ${product.price}
-        </Text>
-        <Text
-          style={{
-            alignSelf: 'center',
-            margin: 20,
-          }}
-        >
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec
-          eros quis magna vehicula blandit at nec velit. Mauris porta risus non
-          lectus ultricies lacinia. Phasellus molestie metus ac metus dapibus,
-          nec maximus arcu interdum. In hac habitasse platea dictumst.
-          Suspendisse fermentum iaculis ex, faucibus semper turpis vestibulum
-          quis.
-        </Text>
-        <Button
-          block
-          style={{ margin: 20 }}
-          onPress={() => this.onBuyPress(product)}
-        >
-          <Text>Buy!</Text>
-        </Button>
-      </ScrollView>
+      <View>
+        <ScrollView>
+          <Image
+            style={{
+              height: 200,
+              width: 160,
+              alignSelf: 'center',
+              marginTop: 20,
+            }}
+            source={{ uri: product.image_link }}
+          />
+          <Text
+            style={{
+              alignSelf: 'center',
+              marginTop: 20,
+              fontSize: 30,
+              fontWeight: 'bold',
+            }}
+          >
+            ${product.price}
+          </Text>
+          
+          
+        </ScrollView>
+        <ScrollView>
+          {this.props.loading && <Spinner />}        
+          <List>
+            {this.props.similarProducts.map(p => (
+              <ListItem key={p.id}>
+                <Thumbnail square height={80} source={{ uri: p.image_link }} />
+                <Body>
+                  <TouchableOpacity onPress={() => this.onProductPress(p)}>
+                    <Text>{p.product_title}</Text>
+                    <Text note>${p.price}</Text>
+                  </TouchableOpacity>
+                </Body>
+              </ListItem>
+            ))}
+          </List>
+        </ScrollView>
+      </View>
     );
   }
 }
 
 ProductDetail.propTypes = {
   navigation: PropTypes.any.isRequired,
-  addProductToCart: PropTypes.func.isRequired,
+  addProductToCart: PropTypes.func.isRequired,  
+  fetchSimilarProducts: PropTypes.func.isRequired,
+  similarProducts: PropTypes.array.isRequired,
 };
 
 ProductDetail.navigationOptions = props => {
@@ -86,8 +92,11 @@ ProductDetail.navigationOptions = props => {
 };
 
 function mapStateToProps(state) {
+  console.log(state.productsReducer.similarProducts);
   return {
+    similarProducts: state.productsReducer.similarProducts,
     user: state.userReducer.user,
+    loading: state.productsReducer.loading,
   };
 }
 function mapStateActionsToProps(dispatch) {

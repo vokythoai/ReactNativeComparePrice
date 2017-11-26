@@ -4,7 +4,7 @@ export const get = uri =>
 
     switch (uri) {
       case '/products':
-        response = fetch("http://45.32.120.179/api/v1/product_mobile_data/418").then(function(response) {
+        response = fetch("http://45.32.120.179/api/v1/product_mobile_data/show").then(function(response) {
                               return response.json()
                             })                   
         break;
@@ -60,6 +60,21 @@ export const post = (uri, data) =>
                               return response.json()
                             })
         
+        break;
+      case '/similar_product_search':
+        response = fetch("http://45.32.120.179/api/v1/product_mobile_data/similar_product", {
+                              method: 'POST',
+                              headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json',
+                              },                             
+                              body: JSON.stringify({
+                                search: "iphone",
+                                page_source: "vienthonga"                                
+                              })
+                            }).then(function(response) {
+                              return response.json()
+                            })
         break;
       default:
         return null;
