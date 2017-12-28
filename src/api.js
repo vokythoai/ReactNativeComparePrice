@@ -1,12 +1,14 @@
+export const URL = 'http://192.168.1.6:4000'
+
 export const get = uri =>
   new Promise(resolve => {
     let response;
 
     switch (uri) {
       case '/products':
-        response = fetch("http://45.32.120.179/api/v1/product_mobile_data/show").then(function(response) {
+        response = fetch(`${URL}/api/v1/product_mobile_data/show`).then(function(response) {
                               return response.json()
-                            })                   
+                            })
         break;
       default:
         return null;
@@ -46,31 +48,32 @@ export const post = (uri, data) =>
       case '/register':
         response = data;
         break;
-      case '/product_search':         
-        response = fetch("http://45.32.120.179/api/v1/product_mobile_data/search", {
+      case '/product_search':
+        console.log(`${URL}/api/v1/product_mobile_data/search`);
+        response = fetch(`${URL}/api/v1/product_mobile_data/search`, {
                               method: 'POST',
                               headers: {
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json',
-                              },                             
+                              },
                               body: JSON.stringify({
-                                search: data.search_params,                                
+                                search: data.search_params,
                               })
                             }).then(function(response) {
                               return response.json()
                             })
-        
+
         break;
       case '/similar_product_search':
-        response = fetch("http://45.32.120.179/api/v1/product_mobile_data/similar_product", {
+        response = fetch(`${URL}/api/v1/product_mobile_data/similar_product`, {
                               method: 'POST',
                               headers: {
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json',
-                              },                             
+                              },
                               body: JSON.stringify({
                                 search: "iphone",
-                                page_source: "vienthonga"                                
+                                page_source: "vienthonga"
                               })
                             }).then(function(response) {
                               return response.json()
