@@ -1,4 +1,4 @@
-export const URL = 'http://192.168.1.107:4000'
+export const URL = 'http://45.32.120.179'
 
 export const get = uri =>
   new Promise(resolve => {

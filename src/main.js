@@ -53,10 +53,7 @@ if (Platform.OS === 'ios') {
   );
 } else {
   Navigator = DrawerNavigator({
-    Home: { screen: ProductsNavigator },
-    MyCart: { screen: MyCart },
-    MyProfile: { screen: MyProfile },
-    Sales: { screen: Sales },
+    Home: { screen: ProductsNavigator }
   });
 }
 
