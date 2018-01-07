@@ -20,10 +20,12 @@ import MyProfile from './screens/MyProfile';
 import Payment from './screens/Payment';
 import PaymentConfirmation from './screens/PaymentConfirmation';
 import Sales from './screens/Sales';
+import ComparePrice from './screens/ComparePrice';
 
 const ProductsNavigator = StackNavigator({
   ProductList: { screen: ProductList },
   ProductDetail: { screen: ProductDetail },
+  ComparePrice: { screen: ComparePrice },
 });
 
 const PurchaseNavigator = StackNavigator({

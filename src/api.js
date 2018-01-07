@@ -1,4 +1,4 @@
-export const URL = 'http://192.168.1.6:4000'
+export const URL = 'http://192.168.1.107:4000'
 
 export const get = uri =>
   new Promise(resolve => {
@@ -72,8 +72,8 @@ export const post = (uri, data) =>
                                 'Content-Type': 'application/json',
                               },
                               body: JSON.stringify({
-                                search: "iphone",
-                                page_source: "vienthonga"
+                                search: data.product.product_title,
+                                page_source: data.product.page_source
                               })
                             }).then(function(response) {
                               return response.json()

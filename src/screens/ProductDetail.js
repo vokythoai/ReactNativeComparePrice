@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, ScrollView, View, TouchableOpacity } from 'react-native';
+import { Image, ScrollView, View, TouchableOpacity, StyleSheet, Linking } from 'react-native';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -7,6 +7,7 @@ import StarRating from 'react-native-star-rating';
 import PropTypes from 'prop-types';
 import { Icon, Button, Text, List, Spinner, ListItem, Thumbnail, Body, Container, Content, Card, CardItem, Left, Right, Fab } from 'native-base';
 import * as ProductsActions from '../reducers/products';
+import * as Animatable from 'react-native-animatable';
 
 class ProductDetail extends React.Component {
   constructor() {
@@ -22,7 +23,15 @@ class ProductDetail extends React.Component {
   };
 
   componentWillMount() {
-    this.props.fetchSimilarProducts();
+    const { navigation } = this.props;
+    const { state } = navigation;
+    const { params } = state;
+    const { product } = params;
+    this.props.fetchSimilarProducts(product);
+  }
+
+  componentDidMount() {
+
   }
 
   onBuyPress(product) {
@@ -37,7 +46,23 @@ class ProductDetail extends React.Component {
     });
   }
 
+  onProductPress(product) {
+    this.props.navigation.navigate('ComparePrice', { product });
+  }
 
+  onComparePress(product) {
+    this.props.navigation.navigate('ComparePrice', { product });
+  }
+
+  handleClick = (url) => {
+    Linking.canOpenURL(url).then(supported => {
+      if (supported) {
+        Linking.openURL(url);
+      } else {
+        console.log("Don't know how to open URI: " + url);
+      }
+    });
+  };
 
   render() {
     const { navigation } = this.props;
@@ -75,9 +100,9 @@ class ProductDetail extends React.Component {
           <List>
             {this.props.similarProducts.map(p => (
               <ListItem style={{ marginLeft: 0}} key={p.id}>
-                <Thumbnail square height={80} resizeMode="contain" source={{ uri: 'https://img.websosanh.vn/v2/users/logo/images/P2g9lSmHO95H.jpg' }} />
+                <Thumbnail square style={stylesProductList.logo} resizeMode="contain" source={{ uri: p.shop_logo_link}} />
                 <Body>
-                  <TouchableOpacity onPress={() => this.onProductPress(p)}>
+                  <TouchableOpacity onPress={() => this.handleClick(p.description)}>
                     <View style={{ width: 80, marginLeft: 15}}>
                       <StarRating
                       disabled={false}
@@ -86,16 +111,16 @@ class ProductDetail extends React.Component {
                       halfStar={'ios-star-half'}
                       iconSet={'Ionicons'}
                       maxStars={5}
-                      rating={2}
+                      rating={Math.floor(Math.random() * 5) + 1}
                       starSize={15}
                       selectedStar={(rating) => this.onStarRatingPress(rating)}
                       starColor={'red'}
                     />
                     </View>
-                    <Text>{p.product_title}</Text>
+                    <Text>{p.full_name}</Text>
                     <Text note>{p.price}₫</Text>
-                    <Text note>Link sản phẩm: http://sgmall.vn/san-pham/iphone-x-edition-64gb-silver-quoc-te/</Text>
-                    <Text note>Nơi bán: {p.page_source}</Text>
+                    <Text note>Link sản phẩm: {p.description}</Text>
+                    <Text note>Nơi bán: {p.shop_name}</Text>
                   </TouchableOpacity>
                 </Body>
               </ListItem>
@@ -111,7 +136,7 @@ class ProductDetail extends React.Component {
             position="bottomRight"
             onPress={() => this.setState({ active: !this.state.active })}>
             <Icon name="ios-basket-outline" />
-            <Button style={{ backgroundColor: '#34A34F' }}>
+            <Button onPress={() => this.onComparePress(product)} style={{ backgroundColor: '#34A34F' }}>
               <Icon name="ios-pulse" />
             </Button>
           </Fab>
@@ -120,6 +145,13 @@ class ProductDetail extends React.Component {
     );
   }
 }
+
+const stylesProductList = StyleSheet.create({
+  logo: {
+    width: 100,
+    height: 80,
+  }
+})
 
 ProductDetail.propTypes = {
   navigation: PropTypes.any.isRequired,

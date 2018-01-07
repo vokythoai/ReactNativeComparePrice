@@ -1,6 +1,6 @@
 <script src="http://localhost:8097"></script>
 import React from 'react';
-import { ScrollView, TouchableOpacity, TextInput, Button as LinkButton, StyleSheet, View, StatusBar  } from 'react-native';
+import { ScrollView, TouchableOpacity, TextInput, Button as LinkButton, StyleSheet, View, StatusBar, Image  } from 'react-native';
 import PropTypes from 'prop-types';
 
 import { bindActionCreators } from 'redux';
@@ -100,10 +100,6 @@ class ProductList extends React.Component {
                 containerCustomStyle={styles.slider}
                 contentContainerCustomStyle={styles.sliderContentContainer}
                 loop={true}
-                loopClonesPerSide={2}
-                autoplay={true}
-                autoplayDelay={500}
-                autoplayInterval={3000}
                 onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index }) }
               />
 
@@ -151,13 +147,13 @@ class ProductList extends React.Component {
                 <List>
                   {this.props.products.map(p => (
                   <ListItem style={stylesProductList.listView} key={p.id}>
-                    <Thumbnail style={stylesProductList.thumbNail} square source={{ uri: p.image_link }} resizeMode="contain" />
+                    <Thumbnail style={stylesProductList.thumbNail} square source={{ uri: p.image_link }} resizeMode="stretch" />
                       <Body>
                         <TouchableOpacity onPress={() => this.onProductPress(p)}>
                           <Content>
-                            <H2 style={stylesProductList.text, stylesProductList.productName}>{p.product_title}</H2>
+                            <H2 style={stylesProductList.text, stylesProductList.productName}>{p.full_name}</H2>
                             <H3 style={stylesProductList.text, stylesProductList.price} note>Giá: {p.price}₫</H3>
-                            <H3 style={stylesProductList.text, stylesProductList.otherInfo} note>Shop: {p.page_source}</H3>
+                            <Image style={stylesProductList.logo} source={{ uri: p.shop_logo_link }} resizeMode="contain" />
                             <H3 style={stylesProductList.text, stylesProductList.otherInfo} note>Nhấn vào để xem chi tiết</H3>
                           </Content>
                         </TouchableOpacity>
@@ -179,9 +175,14 @@ const stylesProductList = StyleSheet.create({
     marginLeft: 0
   },
   thumbNail: {
-    width: 80,
+    width: 100,
     height:80,
     marginRight: 30
+  },
+  logo: {
+    width: 80,
+    height: 40,
+    marginLeft: 10,
   },
   text: {
     marginBottom: 5

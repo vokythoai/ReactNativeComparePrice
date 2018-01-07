@@ -19,7 +19,7 @@ const entryBorderRadius = 8;
 
 export default StyleSheet.create({
     slideInnerContainer: {
-        width: itemWidth,
+        width: 600,
         height: slideHeight,
         paddingHorizontal: itemHorizontalMargin,
         paddingBottom: 18 // needed for shadow
@@ -35,7 +35,6 @@ export default StyleSheet.create({
     },
     image: {
         ...StyleSheet.absoluteFillObject,
-        resizeMode: 'cover',
         borderRadius: Platform.OS === 'ios' ? entryBorderRadius : 0,
         borderTopLeftRadius: entryBorderRadius,
         borderTopRightRadius: entryBorderRadius

@@ -34,7 +34,7 @@ export default function reducer(state = initialState, action = {}) {
       return { ...state, error: action.payload.error, loading: false };
     case SEARCH:
       return { ...state, loading: true };
-    case SIMILAR_SEARCH:      
+    case SIMILAR_SEARCH:
       return {
        ...state,
        loading: false,
@@ -96,10 +96,10 @@ export function searchProduct(search_params) {
   };
 }
 
-export function fetchSimilarProducts(search_params) {
+export function fetchSimilarProducts(product) {
   return dispatch => {
     dispatch({ type: FETCH });
-    post('/similar_product_search', { search_params } )
+    post('/similar_product_search', { product } )
       .then(similarProducts =>
         dispatch({ type: SIMILAR_SEARCH, payload: { similarProducts } }),
       )

@@ -26,6 +26,7 @@ MERGED from [com.facebook.react:react-native:0.48.3] /home/thoaivo/Project/AppSo
 		ADDED from /home/thoaivo/Project/AppSoSanh/android/app/src/main/AndroidManifest.xml:7:22-75
 uses-sdk
 ADDED from /home/thoaivo/Project/AppSoSanh/android/app/src/main/AndroidManifest.xml:9:5-11:41
+MERGED from [ecommerce:react-native-svg:unspecified] /home/thoaivo/Project/AppSoSanh/android/app/build/intermediates/exploded-aar/ecommerce/react-native-svg/unspecified/AndroidManifest.xml:7:5-9:41
 MERGED from [com.facebook.react:react-native:0.48.3] /home/thoaivo/Project/AppSoSanh/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.48.3/AndroidManifest.xml:7:5-9:41
 MERGED from [com.android.support:appcompat-v7:23.0.1] /home/thoaivo/Project/AppSoSanh/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/AndroidManifest.xml:20:5-43
 MERGED from [com.android.support:support-v4:23.0.1] /home/thoaivo/Project/AppSoSanh/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/AndroidManifest.xml:20:5-43
